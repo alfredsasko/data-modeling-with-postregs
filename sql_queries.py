@@ -1,42 +1,45 @@
 # DROP TABLES
 
 songplay_table_drop = "DROP TABLE IF EXISTS songsplay;"
-user_table_drop = "DROP TABLE IF EXISTS songs;"
-song_table_drop = "DROP TABLE IF EXISTS artists;"
-artist_table_drop = "DROP TABLE IF EXISTS time;"
-time_table_drop = "DROP TABLE IF EXISTS users;"
+user_table_drop = "DROP TABLE IF EXISTS users;"
+song_table_drop = "DROP TABLE IF EXISTS songs;"
+artist_table_drop = "DROP TABLE IF EXISTS artists;"
+time_table_drop = "DROP TABLE IF EXISTS time;"
 
 # CREATE TABLES
 
 user_table_create = ("""
     CREATE TABLE IF NOT EXISTS users (
-        user_id VARCHAR PRIMARY KEY, 
+        user_id VARCHAR,
         first_name VARCHAR NOT NULL, 
         last_name VARCHAR NOT NULL, 
         gender VARCHAR, 
-        level VARCHAR NOT NULL 
+        level VARCHAR NOT NULL,
+        PRIMARY KEY(user_id)
     );
 """)
 
 artist_table_create = ("""
     CREATE TABLE IF NOT EXISTS artists (
-        artist_id VARCHAR PRIMARY KEY, 
+        artist_id VARCHAR, 
         name VARCHAR NOT NULL, 
         location VARCHAR, 
         latitude DECIMAL, 
-        longitude DECIMAL
+        longitude DECIMAL,
+        PRIMARY KEY(artist_id)
     );
 """)
 
 time_table_create = ("""
     CREATE TABLE IF NOT EXISTS time (
-        start_time TIMESTAMP PRIMARY KEY, 
+        start_time TIMESTAMP, 
         hour INT NOT NULL, 
         day INT NOT NULL, 
         week INT NOT NULL, 
         month INT NOT NULL, 
         year INT NOT NULL, 
-        weekday INT NOT NULL
+        weekday INT NOT NULL,
+        PRIMARY KEY(start_time)
     );
 """)
 
@@ -46,24 +49,29 @@ song_table_create = ("""
         title VARCHAR,
         artist_id VARCHAR(18),
         year INTEGER,
-        duration INTEGER,
-        PRIMARY KEY(song_id)
-        -- FOREIGN KEY(artist_id) REFERENCES artists(artist_id) ON DELETE CASCADE
+        duration DECIMAL,
+        PRIMARY KEY(song_id),
+        FOREIGN KEY(artist_id) REFERENCES artists(artist_id)
     );
 """)
 
 
 songplay_table_create = ("""
     CREATE TABLE IF NOT EXISTS songplays (
-        songplay_id SERIAL PRIMARY KEY,
-        user_id VARCHAR NOT NULL REFERENCES users,
-        start_time TIMESTAMP NOT NULL REFERENCES time,
+        songplay_id SERIAL,
+        user_id VARCHAR NOT NULL,
+        start_time TIMESTAMP NOT NULL,
         level VARCHAR NOT NULL,
-        song_id VARCHAR NOT NULL REFERENCES songs,
-        artist_id VARCHAR NOT NULL REFERENCES artists,
+        song_id VARCHAR,
+        artist_id VARCHAR,
         session_id VARCHAR NOT NULL,
         location VARCHAR,
-        user_agent VARCHAR
+        user_agent VARCHAR,
+        PRIMARY KEY(songplay_id),
+        FOREIGN KEY(user_id) REFERENCES users(user_id),
+        FOREIGN KEY(start_time) REFERENCES time(start_time),
+        FOREIGN KEY(song_id) REFERENCES songs(song_id),
+        FOREIGN KEY(artist_id) REFERENCES artists(artist_id)
     );
 """)
 

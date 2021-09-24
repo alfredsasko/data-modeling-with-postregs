@@ -12,17 +12,6 @@ def process_song_file(cur, filepath):
     # open song file
     df = pd.read_json(filepath, orient='index').transpose()
 
-    # insert song record
-    song_data = df.loc[0, [
-        'song_id',
-        'title',
-        'artist_id',
-        'year',
-        'duration'
-    ]].to_list()
-
-    cur.execute(song_table_insert, song_data)
-
     # insert artist record
     artist_data = df[[
         'artist_id',
@@ -30,13 +19,20 @@ def process_song_file(cur, filepath):
         'artist_location',
         'artist_latitude',
         'artist_longitude'
-    ]].drop_duplicates('artist_id').loc[0].to_list()
+    ]].loc[0].to_list()
 
-    try:
-        cur.execute(artist_table_insert, artist_data)
-    except psycopg2.errors.UniqueViolation as e:
-        print(e)
+    cur.execute(artist_table_insert, artist_data)
 
+    # insert song record
+    song_data = df[[
+        'song_id',
+        'title',
+        'artist_id',
+        'year',
+        'duration'
+    ]].loc[0].to_list()
+
+    cur.execute(song_table_insert, song_data)
 
 def process_log_file(cur, filepath):
     # open log file
@@ -81,7 +77,7 @@ def process_log_file(cur, filepath):
         'lastName',
         'gender',
         'level'
-    ]].drop_duplicates('userId')
+    ]]
 
     # insert user records
     for i, row in user_df.iterrows():
@@ -91,31 +87,32 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
 
         # get songid and artistid from song and artist tables
-        cur.execute(song_select, (row.song, row.artist, row.length))
+        results = cur.execute(song_select, (row.song, row.artist, row.length))
         results = cur.fetchone()
 
         if results:
             song_id, artist_id = results
         else:
             # if artist and song id not in tables ad them
-            song_id = uuid.uuid4().hex[:18].upper()
-            artist_id = uuid.uuid4().hex[:18].upper()
+            # song_id = uuid.uuid4().hex[:18].upper()
+            # artist_id = uuid.uuid4().hex[:18].upper()
+            song_id, artist_id = None, None
 
-            cur.execute(artist_table_insert, (
-                artist_id,
-                row.artist,
-                None,
-                None,
-                None
-            ))
-
-            cur.execute(song_table_insert, (
-                song_id,
-                row.song,
-                artist_id,
-                datetime.fromtimestamp(row.ts / 1000).year,
-                row.length
-            ))
+            # cur.execute(artist_table_insert, (
+            #     artist_id,
+            #     row.artist,
+            #     None,
+            #     None,
+            #     None
+            # ))
+            #
+            # cur.execute(song_table_insert, (
+            #     song_id,
+            #     row.song,
+            #     artist_id,
+            #     datetime.fromtimestamp(row.ts / 1000).year,
+            #     row.length
+            # ))
 
         # insert songplay record
         songplay_data = [
