@@ -1,3 +1,5 @@
+"""Main module to extract, transform and load data from JSON log and song files to Postgres snowflake schema"""
+
 from datetime import datetime
 import os
 import glob
@@ -9,6 +11,16 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """Extracts data from song file and inserts them to artists, songs, and users tables.
+
+    Args:
+    -----
+    cur : cursor object
+        Any cursor object of any python database library
+
+    filepath: string
+        Absolute path of the JSON song file to extract data from
+        """
     # open song file
     df = pd.read_json(filepath, orient='index').transpose()
 
@@ -35,6 +47,16 @@ def process_song_file(cur, filepath):
     cur.execute(song_table_insert, song_data)
 
 def process_log_file(cur, filepath):
+    """Extracts data from log file and inserts them to time and songplays tables.
+
+    Args:
+    -----
+    cur : cursor object
+        Any cursor object of any python database library
+
+    filepath: string
+        Absolute path of the JSON log file to extract data from
+        """
     # open log file
     df = pd.read_json(filepath, lines=True, orient='record')
 
@@ -130,6 +152,23 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """Extracts json files, transforms and loads data to Database
+
+    Args:
+    -----
+    cur : cursor object
+        Any cursor object of any python database library
+
+    conn: connection object
+        Any connection object of any python database library
+
+    filepath: string
+        Absolute or relative path for root directory with json files
+
+    func: python function with signature def func(cur: CursorObject, filepath: Path-Like object)
+        Any python function transforming and loading data to database from filepath via cursor object
+
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):

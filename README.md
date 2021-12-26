@@ -216,3 +216,141 @@ Before submitting your project, please review and confirm the following items.
 * All required functionality exists and my project behaves as expected per the project's specifications.
 
 Once you have checked all these items, you are ready to submit!
+
+## 5. Installation
+Run the `create_tables.py` script in the project's root directory to set up your database and create tables:
+```
+create_tables.py
+>>> Setting up database...
+>>> Dropping tables...
+>>> Setting up tables...
+>>> 
+>>> Process finished with exit code 0
+```
+
+Run the `etl.py` script to process log and song json files to snowflake schema `sparkifydb` in Postgres DBMS.
+```
+etl.py
+>>> 71 files found in data/song_data
+>>> 1/71 files processed.
+>>> 2/71 files processed.
+>>> 3/71 files processed.
+>>> 4/71 files processed.
+>>> 5/71 files processed.
+>>> 6/71 files processed.
+>>> 7/71 files processed.
+>>> 8/71 files processed.
+>>> 9/71 files processed.
+>>> 10/71 files processed.
+>>> 11/71 files processed.
+>>> 12/71 files processed.
+>>> 13/71 files processed.
+>>> 14/71 files processed.
+>>> 15/71 files processed.
+>>> 16/71 files processed.
+>>> 17/71 files processed.
+>>> 18/71 files processed.
+>>> 19/71 files processed.
+>>> 20/71 files processed.
+>>> 21/71 files processed.
+>>> 22/71 files processed.
+>>> 23/71 files processed.
+>>> 24/71 files processed.
+>>> 25/71 files processed.
+>>> 26/71 files processed.
+>>> 27/71 files processed.
+>>> 28/71 files processed.
+>>> 29/71 files processed.
+>>> 30/71 files processed.
+>>> 31/71 files processed.
+>>> 32/71 files processed.
+>>> 33/71 files processed.
+>>> 34/71 files processed.
+>>> 35/71 files processed.
+>>> 36/71 files processed.
+>>> 37/71 files processed.
+>>> 38/71 files processed.
+>>> 39/71 files processed.
+>>> 40/71 files processed.
+>>> 41/71 files processed.
+>>> 42/71 files processed.
+>>> 43/71 files processed.
+>>> 44/71 files processed.
+>>> 45/71 files processed.
+>>> 46/71 files processed.
+>>> 47/71 files processed.
+>>> 48/71 files processed.
+>>> 49/71 files processed.
+>>> 50/71 files processed.
+>>> 51/71 files processed.
+>>> 52/71 files processed.
+>>> 53/71 files processed.
+>>> 54/71 files processed.
+>>> 55/71 files processed.
+>>> 56/71 files processed.
+>>> 57/71 files processed.
+>>> 58/71 files processed.
+>>> 59/71 files processed.
+>>> 60/71 files processed.
+>>> 61/71 files processed.
+>>> 62/71 files processed.
+>>> 63/71 files processed.
+>>> 64/71 files processed.
+>>> 65/71 files processed.
+>>> 66/71 files processed.
+>>> 67/71 files processed.
+>>> 68/71 files processed.
+>>> 69/71 files processed.
+>>> 70/71 files processed.
+>>> 71/71 files processed.
+>>> 30 files found in data/log_data
+>>> 1/30 files processed.
+>>> 2/30 files processed.
+>>> 3/30 files processed.
+>>> 4/30 files processed.
+>>> 5/30 files processed.
+>>> 6/30 files processed.
+>>> 7/30 files processed.
+>>> 8/30 files processed.
+>>> 9/30 files processed.
+>>> 10/30 files processed.
+>>> 11/30 files processed.
+>>> 12/30 files processed.
+>>> 13/30 files processed.
+>>> 14/30 files processed.
+>>> 15/30 files processed.
+>>> 16/30 files processed.
+>>> 17/30 files processed.
+>>> 18/30 files processed.
+>>> 19/30 files processed.
+>>> 20/30 files processed.
+>>> 21/30 files processed.
+>>> 22/30 files processed.
+>>> 23/30 files processed.
+>>> 24/30 files processed.
+>>> 25/30 files processed.
+>>> 26/30 files processed.
+>>> 27/30 files processed.
+>>> 28/30 files processed.
+>>> 29/30 files processed.
+>>> 30/30 files processed.
+>>> 
+>>> Process finished with exit code 0
+
+```
+
+## 5. Project Structure Description
+```
+Project:                                       
+│   README.md                                   # Project instruction and documentation                         
+│   sql_queries.py                              # Module with all sql queries 
+│   .gitignore                                  # All checkpoints, data are not part of repository
+│   test.ipynb                                  # Unit test to validate ETL pipeline
+│   etl.ipynb                                   # ETL pipeline development
+│   etl.py                                      # ETL pipeline production
+│   create_tables.py                            # Creates snowflake scheme in production
+│   dend-p1-lessons-cheat-sheet.pdf             
+│
+└───assets
+        01_log_dataset.png                      # Assets for README.md
+```

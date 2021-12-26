@@ -1,3 +1,6 @@
+"""Module includes all sql statements for the ELT pipeline"""
+
+
 # DROP TABLES
 
 songplay_table_drop = "DROP TABLE IF EXISTS songsplay;"
@@ -54,7 +57,6 @@ song_table_create = ("""
         FOREIGN KEY(artist_id) REFERENCES artists(artist_id)
     );
 """)
-
 
 songplay_table_create = ("""
     CREATE TABLE IF NOT EXISTS songplays (
