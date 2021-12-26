@@ -3,7 +3,7 @@
 from datetime import datetime
 import os
 import glob
-import uuid
+# import uuid
 
 import psycopg2
 import pandas as pd
@@ -45,6 +45,7 @@ def process_song_file(cur, filepath):
     ]].loc[0].to_list()
 
     cur.execute(song_table_insert, song_data)
+
 
 def process_log_file(cur, filepath):
     """Extracts data from log file and inserts them to time and songplays tables.
@@ -109,7 +110,7 @@ def process_log_file(cur, filepath):
     for index, row in df.iterrows():
 
         # get songid and artistid from song and artist tables
-        results = cur.execute(song_select, (row.song, row.artist, row.length))
+        cur.execute(song_select, (row.song, row.artist, row.length))
         results = cur.fetchone()
 
         if results:
