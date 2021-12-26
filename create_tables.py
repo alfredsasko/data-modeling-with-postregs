@@ -58,9 +58,14 @@ def main():
     
     - Finally, closes the connection. 
     """
+
+    print('Setting up database...')
     cur, conn = create_database()
 
+    print('Dropping tables...')
     drop_tables(cur, conn)
+
+    print('Setting up tables...')
     create_tables(cur, conn)
 
     conn.close()
