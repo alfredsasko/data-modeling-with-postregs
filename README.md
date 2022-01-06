@@ -218,7 +218,12 @@ Before submitting your project, please review and confirm the following items.
 Once you have checked all these items, you are ready to submit!
 
 ## 5. Installation
+
+`master` branch loads json files using iteration over pandas dataframe rows. `bulk_etl` branch uses Postgres `COPY`
+command to copy json files to database in bulk. It is much faster. It also includes several `CHECK` constraints.
+
 Run the `create_tables.py` script in the project's root directory to set up your database and create tables:
+
 ```
 create_tables.py
 >>> Setting up database...
@@ -229,8 +234,10 @@ create_tables.py
 ```
 
 Run the `etl.py` script to process log and song json files to snowflake schema `sparkifydb` in Postgres DBMS.
+
 ```
 etl.py
+
 >>> 71 files found in data/song_data
 >>> 1/71 files processed.
 >>> 2/71 files processed.
@@ -303,6 +310,7 @@ etl.py
 >>> 69/71 files processed.
 >>> 70/71 files processed.
 >>> 71/71 files processed.
+
 >>> 30 files found in data/log_data
 >>> 1/30 files processed.
 >>> 2/30 files processed.
@@ -340,6 +348,7 @@ etl.py
 ```
 
 ## 5. Project Structure Description
+
 ```
 Project:                                       
 │   README.md                                   # Project instruction and documentation                         

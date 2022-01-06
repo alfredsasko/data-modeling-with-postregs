@@ -33,7 +33,7 @@ user_table_create = ("""
         user_id    VARCHAR,
         first_name VARCHAR NOT NULL,
         last_name  VARCHAR NOT NULL,
-        gender     VARCHAR,
+        gender     VARCHAR(1) CHECK (gender = 'F' OR gender = 'M' OR gender IS NULL),
         level      VARCHAR NOT NULL,
         PRIMARY KEY (user_id)
     );
