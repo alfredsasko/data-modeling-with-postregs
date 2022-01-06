@@ -15,7 +15,7 @@ time_table_drop = "DROP TABLE IF EXISTS time;"
 tmp_table_delete = "DELETE FROM tmp_table;"
 tmp_table_filter_next_song = """
     DELETE
-    FROM tmp_tb
+    FROM tmp_table
     WHERE json_record ->> 'page' != 'NextSong';
 """
 
